@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { onMounted, ref, defineComponent } from 'vue';
+import { onMounted, ref, defineComponent, onBeforeMount } from 'vue';
 import axios from 'axios';
 
 interface Contact {
@@ -35,7 +35,7 @@ export default defineComponent({
   components: {},
   setup() {
     const contacts = ref<Contact[]>([]);
-    let isAuthorized = false;
+    let isAuthorized = ref();
 
     function GetContacts() {
       axios
@@ -65,28 +65,27 @@ export default defineComponent({
       clickedContact.showPhoneNumber = !clickedContact.showPhoneNumber;
     }
 
-    function IsAuthorized(){
+    function IsAuthorized() {
       axios
-        .get('/api/IsAuthorized', {
+        .get("api/IsAuthorized", {
           headers: {
-            accept: 'application/json',
+            accept: "*/*",
           },
         })
-        .then(response => {
-          if (response.status === 200) {
-            isAuthorized = true;
-          } else {
-            isAuthorized = false;
-          }
+        .then(() => {
+          isAuthorized.value = true;
         })
-        .catch(error => {
-          console.error('Error fetching authorization status:', error);
+        .catch(() => {
+          isAuthorized.value = false;
         });
     }
 
+    onBeforeMount(async () => {
+      await IsAuthorized();
+    });
+
     onMounted(() => {
       GetContacts();
-      IsAuthorized();
     });
 
     return {
