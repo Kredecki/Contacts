@@ -17,5 +17,16 @@ namespace Contacts.API.Services
 
             return contacts;
         }
+
+        public async Task<Contact> GetContactById(int id)
+        {
+            Contact contact = await _contactRepository.GetContactById(id);
+            return contact;
+        }
+
+        public async Task RemoveContact(Contact contact)
+        {
+            await _contactRepository.RemoveContact(contact);
+        }
     }
 }

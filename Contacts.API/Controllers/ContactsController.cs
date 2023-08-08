@@ -21,5 +21,21 @@ namespace Contacts.API.Controllers
 
             return contacts;
         }
+
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<IActionResult> RemoveContact(int id)
+        {
+            Contact contact = await _contactService.GetContactById(id);
+
+            if (contact == null)
+            {
+                return NotFound();
+            }
+
+            await _contactService.RemoveContact(contact);
+
+            return Ok();
+        }
     }
 }
