@@ -1,4 +1,5 @@
 using Contacts.API.Data;
+using Contacts.API.Data.Repositories;
 using Contacts.API.Interfaces;
 using Contacts.API.Models;
 using Contacts.API.Services;
@@ -25,6 +26,8 @@ builder.Services.AddIdentity<User, IdentityRole<Guid>>()
 builder.Services.AddAuthentication();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IContactService, ContactService>();
+builder.Services.AddScoped<IContactRepository, ContactRepository>();
 
 builder.Services.AddCors(options =>
 {
