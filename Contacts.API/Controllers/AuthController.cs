@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Contacts.API.Controllers
 {
+    [Route("api/[Controller]")]
+    [ApiController]
     public class AuthController : Controller
     {
         public readonly IAuthService _authService;
