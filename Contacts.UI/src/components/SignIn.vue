@@ -15,9 +15,12 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import axios from 'axios';
+  import { useRouter } from 'vue-router';
 
   const email = ref('');
   const password = ref('');
+
+  const router = useRouter();
 
   const SubmitForm = async () => {
     try {
@@ -34,6 +37,7 @@
           },
         }
       );
+      router.push('/list');
     } catch (error) {
       console.error(error);
     }
