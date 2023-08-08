@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import { RouterNameEnum, RouterUrlEnum } from '../types/enums';
+import { RouterNameEnum } from '../types/enums/RouterNameEnum';
+import { RouterUrlEnum } from '../types/enums/RouterUrlEnum';
 
 import Details from '../components/Contact-Details.vue'
 import List from '../components/Contact-List.vue'

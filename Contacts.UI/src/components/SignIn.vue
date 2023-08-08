@@ -2,18 +2,18 @@
 
 </template>
 
-<scirpt lang="ts">
+<scirpt setup lang="ts">
     import { defineComponent } from 'vue';
 
     export default defineComponent({
         setup(){
             return{
 
-            };
-        };
+            }
+        },
     });
 </scirpt>
 
 <style>
-@import "../styles/SignIn.scss";
+    @import "../styles/SignIn.css";
 </style>

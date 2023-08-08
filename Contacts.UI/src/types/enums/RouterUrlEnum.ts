@@ -1,6 +1,6 @@
 export enum RouterUrlEnum {
-    Details = '/Details',
-    List = '/List',
-    SignUp = '/SginUp',
-    SignIn = 'SignIn'
+    Details = '/details',
+    List = '/list',
+    SignUp = '/signup',
+    SignIn = '/signin'
 }
