@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Contacts.API.Controllers
 {
-    [Route("api/[Controller]")]
-    [ApiController]
     public class ContactsController : Controller
     {
         private readonly IContactService _contactService;
