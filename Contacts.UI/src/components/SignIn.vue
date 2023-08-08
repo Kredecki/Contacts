@@ -1,18 +1,44 @@
 <template>
-
+    <form @submit.prevent="SubmitForm" method="post">
+      <div>
+        <label for="Email">Email</label>
+        <input v-model="email" id="Email" />
+      </div>
+      <div>
+        <label for="Password">Password</label>
+        <input v-model="password" id="Password" type="password" />
+      </div>
+      <input type="submit" value="Login" />
+    </form>
 </template>
 
-<scirpt setup lang="ts">
-    import { defineComponent } from 'vue';
+<script setup lang="ts">
+  import { ref } from 'vue';
+  import axios from 'axios';
 
-    export default defineComponent({
-        setup(){
-            return{
+  const email = ref('');
+  const password = ref('');
 
-            }
+  const SubmitForm = async () => {
+    try {
+      await axios.post(
+        "api/SignIn",
+        {
+          Email: email.value,
+          Password: password.value,
         },
-    });
-</scirpt>
+        {
+          headers: {
+            Accept: "*/*",
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+</script>
 
 <style>
     @import "../styles/SignIn.css";
