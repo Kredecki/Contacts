@@ -1,6 +1,7 @@
 ﻿using Contacts.API.BindingModels;
 using Contacts.API.Interfaces;
 using Contacts.API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,7 +30,6 @@ namespace Contacts.API.Controllers
             return BadRequest();
         }
 
-
         [HttpPost]
         [Route("[action]")]
         public async Task<IActionResult> SignIn([FromForm] SignIn model)
@@ -43,6 +43,21 @@ namespace Contacts.API.Controllers
                 return Ok(new { message = "Login successful" });
 
             return BadRequest("Invalid username or password");
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("[action")]
+        public async Task<IActionResult> isAuthorized()
+        {
+            try
+            {
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
     }
 }
