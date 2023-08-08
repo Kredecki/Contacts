@@ -1,5 +1,7 @@
 using Contacts.API.Data;
+using Contacts.API.Interfaces;
 using Contacts.API.Models;
+using Contacts.API.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,6 +23,8 @@ builder.Services.AddIdentity<User, IdentityRole<Guid>>()
     .AddDefaultTokenProviders();
 
 builder.Services.AddAuthentication();
+
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 var app = builder.Build();
 
