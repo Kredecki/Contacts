@@ -1,12 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Contacts.API.Interfaces;
+using Contacts.API.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Contacts.API.Controllers
 {
     public class ContactsController : Controller
     {
-        public IActionResult Index()
+        private readonly IContactService _contactService;
+
+        public ContactsController(IContactService contactService)
         {
-            return View();
+            _contactService = contactService;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<Contact>>> GetContacts()
+        {
+            List<Contact> contacts = await _contactService.GetContacts();
+
+            return contacts;
         }
     }
 }
