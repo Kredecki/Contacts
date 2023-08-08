@@ -1,8 +1,6 @@
 ﻿using Contacts.API.BindingModels;
 using Contacts.API.Interfaces;
-using Contacts.API.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Contacts.API.Controllers
@@ -47,8 +45,8 @@ namespace Contacts.API.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("[action")]
-        public async Task<IActionResult> isAuthorized()
+        [Route("[action]")]
+        public IActionResult IsAuthorized()
         {
             try
             {
