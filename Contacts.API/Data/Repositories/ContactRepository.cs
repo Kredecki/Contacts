@@ -16,7 +16,7 @@ namespace Contacts.API.Data.Repositories
         public async Task<List<Contact>> GetContacts()
         {
             List<Contact> contacts = await _db.Contacts
-                .Select(x => new Contact { Name = x.Name, Surname = x.Surname, Phone = x.Phone })
+                .Select(x => new Contact { ContactId = x.ContactId, Name = x.Name, Surname = x.Surname, Phone = x.Phone })
                 .ToListAsync();
 
             return contacts;

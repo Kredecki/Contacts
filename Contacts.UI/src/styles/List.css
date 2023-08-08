@@ -1,0 +1,130 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.container {
+    background-color: #f0f0f0;
+    padding: 20px;
+    width: 500px;
+  }
+
+.contact {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.contact-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.contact-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.contact-phone {
+  font-size: 14px;
+  color: #888;
+}
+
+.buttons {
+  margin-top: 10px;
+}
+
+.Call {
+  background-color: #59a700;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-size: 14px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.Call:hover{
+    background-color: #478500;
+}
+
+.Message {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 14px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.Message:hover{
+    background-color: #0059cc;
+
+}
+
+.VideoCall{
+    background-color: #0aab04;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 14px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.VideoCall:hover{
+    background-color: #088902;
+}
+
+.Info{
+    background-color: #acacac;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 14px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.Info:hover{
+    background-color: #8a8a8a;
+}
+
+.Delete{
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 10px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.Delete:hover{
+    background-color: #ee0000;
+}
+
+.Add{
+    background-color: #1b9c04;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 10px;
+    margin-right: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.Add:hover{
+    background-color: #197a02;
+}
