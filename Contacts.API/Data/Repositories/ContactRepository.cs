@@ -33,5 +33,11 @@ namespace Contacts.API.Data.Repositories
             _db.Contacts.Remove(contact);
             await _db.SaveChangesAsync();
         }
+
+        public async Task AddContact(Contact contact)
+        {
+            _db.Contacts.Add(contact);
+            await _db.SaveChangesAsync();
+        }
     }
 }

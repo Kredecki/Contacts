@@ -37,5 +37,13 @@ namespace Contacts.API.Controllers
 
             return Ok();
         }
+
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<IActionResult> AddContact(Contact contact)
+        {
+            await _contactService.AddContact(contact);
+            return Ok();
+        }
     }
 }

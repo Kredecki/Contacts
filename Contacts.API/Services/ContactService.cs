@@ -28,5 +28,10 @@ namespace Contacts.API.Services
         {
             await _contactRepository.RemoveContact(contact);
         }
+
+        public async Task AddContact(Contact contact)
+        {
+            await _contactRepository.AddContact(contact);
+        }
     }
 }
