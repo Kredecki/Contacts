@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Contacts.API.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Contacts.API.Controllers
 {
     public class AuthController : Controller
     {
-        public IActionResult Index()
+        public readonly IAuthService _authService;
+
+        public AuthController(IAuthService authService)
         {
-            return View();
+            _authService = authService;
         }
     }
 }
