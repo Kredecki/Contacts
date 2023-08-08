@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <button class="Add" v-if="isAuthorized">+</button>
-    <div v-for="contact in contacts" :key="contact.ContactId" class="contact">
+    <div v-for="contact in contacts" :key="contact.contactId" class="contact">
       <div class="contact-details" @click="togglePhoneNumber(contact)">
-        {{ contact.name }} {{ contact.surname }} {{ contact.ContactId }}
-        <button class="Delete" v-if="isAuthorized">DELETE</button>
+        {{ contact.name }} {{ contact.surname }}
+        <button class="Delete" v-if="isAuthorized" @click="removeContact(contact.contactId)">DELETE</button>
       </div>
       <div class="buttons" v-if="contact.showPhoneNumber">
         Phone number: {{ contact.phone }}
@@ -24,7 +24,7 @@ import { onMounted, ref, defineComponent, onBeforeMount } from 'vue';
 import axios from 'axios';
 
 interface Contact {
-  ContactId: number;
+  contactId: number;
   name: string;
   surname: string;
   phone: string;
@@ -80,6 +80,27 @@ export default defineComponent({
         });
     }
 
+    async function removeContact(contactId: number) {
+      try {
+        const response = await axios.post('/api/RemoveContact', null, {
+          params: {
+            id: contactId
+          },
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (response.status === 200) {
+          console.log('Contact removed successfully.');
+        } else {
+          console.error('Failed to remove contact.');
+        }
+      } catch (error) {
+        console.error('Error removing contact:', error);
+      }
+    }
+
     onBeforeMount(async () => {
       await IsAuthorized();
     });
@@ -91,7 +112,8 @@ export default defineComponent({
     return {
       contacts,
       togglePhoneNumber,
-      isAuthorized
+      isAuthorized,
+      removeContact
     };
   },
 });
