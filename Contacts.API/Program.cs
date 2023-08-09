@@ -28,6 +28,8 @@ builder.Services.AddAuthentication();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<IContactRepository, ContactRepository>();
+builder.Services.AddScoped<ICategoriesService, CategoriesService>();
+builder.Services.AddScoped<ICategoriesRepositroy, CategoriesRepository>();
 
 builder.Services.AddCors(options =>
 {
