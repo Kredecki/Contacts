@@ -39,8 +39,9 @@
 
 
 <script lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onBeforeMount } from 'vue';
 import axios from 'axios';
+import router from '../router';
 
 export default {
   setup() {
@@ -141,6 +142,27 @@ export default {
         console.error('Error fetching subcategories:', error);
       }
     };
+
+    let isAuthorized = ref();
+    function IsAuthorized() {
+      axios
+        .get("api/IsAuthorized", {
+          headers: {
+            accept: "*/*",
+          },
+        })
+        .then(() => {
+          isAuthorized.value = true;
+        })
+        .catch(() => {
+          isAuthorized.value = false;
+          router.push('/list')
+        });
+    }
+
+    onBeforeMount(async () => {
+      await IsAuthorized();
+    });
 
     onMounted(() => {
       fetchCategories();
