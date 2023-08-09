@@ -7,5 +7,6 @@ namespace Contacts.API.Interfaces
         Task<List<Category>> GetCategories();
         Task<List<Subcategory>> GetBusinessSubCategories();
         Task subcategoryName(Subcategory subcategory);
+        Task<int> GetSubcategoryIdBySubcategoryName(string subcategoryName);
     }
 }

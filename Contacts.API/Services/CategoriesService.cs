@@ -30,5 +30,10 @@ namespace Contacts.API.Services
 
             await _categoriesRepositroy.subcategoryName(subcategory);
         }
+
+        public async Task<int> GetSubcategoryIdBySubcategoryName(string subcategoryName)
+        {
+            return await _categoriesRepositroy.GetSubcategoryIdBySubcategoryName(subcategoryName);
+        }
     }
 }
