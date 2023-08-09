@@ -82,8 +82,6 @@ export default {
         })
         .then(response => {
           cat = response.data;
-          console.log(cat);
-          console.log(response.data)
         })
         .catch(error => {
           console.error('Error fetching contacts:', error);
