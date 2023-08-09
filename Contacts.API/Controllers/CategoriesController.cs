@@ -21,7 +21,7 @@ namespace Contacts.API.Controllers
         }
 
         [HttpGet]
-        [Route("[action")]
+        [Route("[action]")]
         public async Task<List<Subcategory>> GetBusinessSubCategories()
         {
             return await _categoriesService.GetBusinessSubCategories();
