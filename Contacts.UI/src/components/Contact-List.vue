@@ -12,7 +12,7 @@
           <button class="Call">Call</button>
           <button class="Message">Message</button>
           <button class="VideoCall">Video Call</button>
-          <button class="Info">Info</button>
+          <button class="Info" @click="GoToDetails(contact.contactId)">Info</button>
         </div>
       </div>
     </div>
@@ -109,8 +109,8 @@ export default defineComponent({
       router.push('/add');
     }
 
-    function GoToDetails(){
-      router.push('/Details');
+    function GoToDetails(Id: Number){
+      router.push(`/Details?id=${Id}`);
     }
 
     onBeforeMount(async () => {

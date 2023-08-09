@@ -45,5 +45,27 @@ namespace Contacts.API.Controllers
             await _contactService.AddContact(contact);
             return Ok();
         }
+
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<Contact> GetContactById(int id)
+        {
+            return await _contactService.GetContactById(id);
+        }
+
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<IActionResult> UpdateContact([FromBody] Contact contact)
+        {
+            Contact existingContact = await _contactService.GetContactById(contact.ContactId);
+
+            if (existingContact == null)
+            {
+                return NotFound();
+            }
+
+            await _contactService.UpdateContact(contact);
+            return Ok();
+        }
     }
 }

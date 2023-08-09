@@ -39,5 +39,24 @@ namespace Contacts.API.Data.Repositories
             _db.Contacts.Add(contact);
             await _db.SaveChangesAsync();
         }
+
+        public async Task UpdateContact(Contact contact)
+        {
+            try
+            {
+                var existingContact = await _db.Contacts.FindAsync(contact.ContactId);
+                if (existingContact != null)
+                {
+                    _db.Entry(existingContact).State = EntityState.Detached;
+                }
+
+                _db.Contacts.Update(contact);
+                await _db.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception appropriately
+            }
+        }
     }
 }
