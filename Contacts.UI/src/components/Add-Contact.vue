@@ -38,17 +38,6 @@ import axios from 'axios';
 
 export default {
   setup() {
-    const newContact = ref({
-      Name: '',
-      Surname: '',
-      Phone: '',
-      Email: '',
-      Password: '',
-      CategoryId: 0,
-      SubcategoryId: 0,
-      BirthDate: ''
-    });
-
     const Name = ref();
     const Surname = ref();
     const Phone = ref();
@@ -59,7 +48,6 @@ export default {
     const BirthDate = ref('');
 
     const addContact = async () => {
-        console.log(newContact.value)
       try {
         const response = await axios.post(
         "api/AddContact",
@@ -80,12 +68,6 @@ export default {
           },
         }
       );
-
-        if (response.ok) {
-          console.log('Contact added successfully');
-        } else {
-          console.error('Failed to add contact');
-        }
       } catch (error) {
         console.error('An error occurred:', error);
       }
@@ -100,7 +82,6 @@ export default {
       CategoryId,
       SubcategoryId,
       BirthDate,
-      newContact,
       addContact
     };
   }
