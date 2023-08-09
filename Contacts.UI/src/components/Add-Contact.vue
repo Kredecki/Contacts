@@ -59,9 +59,9 @@ export default {
     const subcategories = ref([]);
     let cat = 0
 
-    const addContact = async () => {
+    const addContact = async () => { //Dodajemy kontakt.
 
-      if(selectedCategoryId.value === 3){
+      if(selectedCategoryId.value === 3){ //Jeżeli kategoria = inny to mamy w polu nazwe, nie id. Dodajemy ją do tabeli subkategorie.
           await axios.post(
           "api/AddNewSubcategory",
           {
@@ -76,7 +76,7 @@ export default {
         );
 
         const response = await axios
-        .get(`/api/GetSubcategoryIdBySubcategoryName?subcategoryName=${selectedSubcategoryId.value}`, {
+        .get(`/api/GetSubcategoryIdBySubcategoryName?subcategoryName=${selectedSubcategoryId.value}`, { //Teraz mamy w tabeli subkategorie nową kategorię, której pobieramy id po nazwie.
           headers: {
             accept: 'application/json',
           },
@@ -88,12 +88,12 @@ export default {
           console.error('Error fetching contacts:', error);
         });
       }
-      else{
+      else{//Jeżeli catid != 3
         cat = selectedSubcategoryId.value;
       }
 
       try {
-        await axios.post(
+        await axios.post( //Dodajemy konakt.
         "api/AddContact",
         {
           Name: Name.value,
@@ -117,7 +117,7 @@ export default {
       }
     };
 
-    const fetchCategories = async () => {
+    const fetchCategories = async () => { //Pobieramy kategorie do dropboxa.
       try {
         const response = await axios.get('/api/GetCategories', {
           headers: {
@@ -130,7 +130,7 @@ export default {
       }
     };
 
-    const fetchSubcategories = async () => {
+    const fetchSubcategories = async () => { //Pobieramy subkategorie do dropboxa.
       try {
         const response = await axios.get('/api/GetBusinessSubcategories', {
           headers: {
@@ -144,7 +144,7 @@ export default {
     };
 
     let isAuthorized = ref();
-    function IsAuthorized() {
+    function IsAuthorized() { //Sprawdzanie autoryzacji.
       axios
         .get("api/IsAuthorized", {
           headers: {

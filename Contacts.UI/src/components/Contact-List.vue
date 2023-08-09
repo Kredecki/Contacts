@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <button class="Add" v-if="isAuthorized" @click="GotoAdd">+</button>
-    <div v-for="contact in contacts" :key="contact.contactId" class="contact">
+    <button class="Add" v-if="isAuthorized" @click="GotoAdd">+</button> <!-- Widoczne tylko po zalogowaniu -->
+    <div v-for="contact in contacts" :key="contact.contactId" class="contact"> <!-- Pętlą listujemy wszystkie kontakty z bazy. -->
       <div class="contact-details" @click="togglePhoneNumber(contact)">
         {{ contact.name }} {{ contact.surname }}
-        <button class="Delete" v-if="isAuthorized" @click="removeContact(contact.contactId)">DELETE</button>
+        <button class="Delete" v-if="isAuthorized" @click="removeContact(contact.contactId)">DELETE</button> <!-- Widoczne tylko po zalogowaniu -->
       </div>
       <div class="buttons" v-if="contact.showPhoneNumber">
         Phone number: {{ contact.phone }}
@@ -40,7 +40,7 @@ export default defineComponent({
     const contacts = ref<Contact[]>([]);
     let isAuthorized = ref();
 
-    function GetContacts() {
+    function GetContacts() { //Pobieramy kontakty z bazy.
       axios
         .get('/api/GetContacts', {
           headers: {
@@ -48,7 +48,7 @@ export default defineComponent({
           },
         })
         .then(response => {
-          const contactsData = response.data.map((contact: Contact) => ({
+          const contactsData = response.data.map((contact: Contact) => ({ //Mapujemy do obiektu
             ...contact,
             showPhoneNumber: false,
           }));
@@ -59,7 +59,7 @@ export default defineComponent({
         });
     }
 
-    function togglePhoneNumber(clickedContact: Contact) {
+    function togglePhoneNumber(clickedContact: Contact) { //Po naciśnięciu pojawia się numer telefonu oraz przyciski. Możemy wyświetlić dane dla max jednego kontaktu.
       contacts.value.forEach(contact => {
         if (contact !== clickedContact) {
           contact.showPhoneNumber = false;
@@ -68,7 +68,7 @@ export default defineComponent({
       clickedContact.showPhoneNumber = !clickedContact.showPhoneNumber;
     }
 
-    function IsAuthorized() {
+    function IsAuthorized() { //Metoda spawdzająca, czy użytkownik jest zalogowany.
       axios
         .get("api/IsAuthorized", {
           headers: {
@@ -83,7 +83,7 @@ export default defineComponent({
         });
     }
 
-    async function removeContact(contactId: number) {
+    async function removeContact(contactId: number) { //Zapytanie API o usunięcie kontaktu.
       try {
         const response = await axios.post('/api/RemoveContact', null, {
           params: {
@@ -105,23 +105,23 @@ export default defineComponent({
       }
     }
 
-    function GotoAdd(){
+    function GotoAdd(){ //Przekierowanie do dodawania kontaktu.
       router.push('/add');
     }
 
-    function GoToDetails(Id: Number){
+    function GoToDetails(Id: Number){ //Przekierowanie do szczegółów kontaktu.
       router.push(`/Details?id=${Id}`);
     }
 
-    onBeforeMount(async () => {
-      await IsAuthorized();
+    onBeforeMount(async () => { //Cykl życia strony - wykonywane przed mountem strony.
+      await IsAuthorized(); //Sprawdzanie czy użytkownik jest zalogowany.
     });
 
-    onMounted(() => {
-      GetContacts();
+    onMounted(() => { //Cykl życia strony.
+      GetContacts(); //Pobieranie kontaktów.
     });
 
-    return {
+    return { //Zwrotka w architekturze MVVM
       contacts,
       togglePhoneNumber,
       isAuthorized,

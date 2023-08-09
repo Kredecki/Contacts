@@ -1,3 +1,4 @@
+<!-- SPA -->
 <template>
   <div id="app">
     <router-view />

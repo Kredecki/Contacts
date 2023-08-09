@@ -10,9 +10,9 @@ import Add from '../components/Add-Contact.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: RouterUrlEnum.Details,
-    name: RouterNameEnum.Details,
-    component: Details
+    path: RouterUrlEnum.Details, //Ścieżka do strony
+    name: RouterNameEnum.Details, //Nazwa strony
+    component: Details //komponent strony
   },
   {
     path: RouterUrlEnum.List,

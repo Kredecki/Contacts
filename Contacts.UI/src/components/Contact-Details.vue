@@ -58,7 +58,7 @@ export default {
     const categories = ref([]);
     const subcategories = ref([]);
 
-    async function GetContact(id: any){
+    async function GetContact(id: any){ //Pobieramy szczegóły kontaktu
         const response = await axios.get(`/api/GetContactById?id=${id}`);
         const contactData = response.data;
         Name.value = contactData.name;
@@ -68,22 +68,22 @@ export default {
         Password.value = contactData.password;
         CategoryId.value=contactData.categoryId;
 
-        if(CategoryId.value === 3){
+        if(CategoryId.value === 3){ //Jeżeli "inny" to zwróć jego nazwe, a nie id. Tutaj trochę oraz poniżej zrobił mi się spaghetti code, wymagający refaktoringu. Pisałem ten front praktycznie w jeden wieczór, ponieważ okazało się, że rxjs w angularze wymaga paru wieczorów więcej.
             const subcategoryName = await axios.get(`/api/GetSubcategoryNameById?id=${contactData.subcategoryId}`)
             SubcategoryId.value = subcategoryName.data;
-        }else{
+        }else{ //W innym wypadku jest to id.
             SubcategoryId.value = contactData.subcategoryId;
         }
 
-
+        //Formatowanie daty.
         const formattedBirthDate = new Date(contactData.birthDate).toISOString().slice(0, 10);
         BirthDate.value = formattedBirthDate;
     }
 
-    async function EditContact() {
+    async function EditContact() { //Po zatwierdzeniu formularza - edytujemy kontakt.
         let cat = 0;
 
-        await axios.post(
+        await axios.post( //Dodajemy nową subkategorie (zapytanie do API)
           "api/AddNewSubcategory",
           {
             subcategoryName: SubcategoryId.value,
@@ -96,7 +96,7 @@ export default {
           }
         );
 
-        if(CategoryId.value === 3){
+        if(CategoryId.value === 3){ //Jeżeli jest to kategoria "inny" pobieramy id po nazwie. Wcześniej pobieraliśmy nazwę po id. Czyli odwracamy proces, żeby od tabeli z kontaktami wysłać prawidłową wartość
             const response = await axios
             .get(`/api/GetSubcategoryIdBySubcategoryName?subcategoryName=${SubcategoryId.value}`, {
             headers: {
@@ -110,7 +110,7 @@ export default {
             .catch(error => {
                 console.error('Error fetching contacts:', error);
             });
-        }else{
+        }else{ //W innym wypadku to id.
             cat = SubcategoryId.value;
         }
 
@@ -126,13 +126,13 @@ export default {
             BirthDate: BirthDate.value,
         };
         try {
-            await axios.post(`/api/UpdateContact`, updatedContact);
+            await axios.post(`/api/UpdateContact`, updatedContact); //Właściwy update do tabeli z kontaktami.
         } catch (error) {
             console.error('Error updating contact:', error);
         }
     }
 
-    const fetchCategories = async () => {
+    const fetchCategories = async () => { //Pobieramy kategorie do dropboxa.
       try {
         const response = await axios.get('/api/GetCategories', {
           headers: {
@@ -145,7 +145,7 @@ export default {
       }
     };
 
-    const fetchSubcategories = async () => {
+    const fetchSubcategories = async () => { //pobieramy subkategorie do dropboxa.
       try {
         const response = await axios.get('/api/GetBusinessSubcategories', {
           headers: {
@@ -158,7 +158,7 @@ export default {
       }
     };
 
-    let isAuthorized = ref();
+    let isAuthorized = ref(); //Sprawdzanie autoryzacji.
     function IsAuthorized() {
       axios
         .get("api/IsAuthorized", {
@@ -175,11 +175,11 @@ export default {
         });
     }
 
-    onBeforeMount(async () => {
+    onBeforeMount(async () => { //Cykl życia strony - przed mountem.
       await IsAuthorized();
     });
 
-    onMounted(() => {
+    onMounted(() => { //Cykl życia strony - mount.
         const id = route.query.id ?? " ";
         GetContact(id);
         fetchCategories();

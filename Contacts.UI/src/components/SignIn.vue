@@ -20,26 +20,26 @@
   const email = ref('');
   const password = ref('');
 
-  const router = useRouter();
+  const router = useRouter(); //init routera
 
-  const SubmitForm = async () => {
+  const SubmitForm = async () => { //Przy zatwierdzeniu formularza wysyłamy requesta (z wykorzystaniem biblioteki axios) do API wraz z danymi z formularza. Zwrotka loguje użytkownika.
     try {
       await axios.post(
         "api/SignIn",
         {
           Email: email.value,
-          Password: password.value,
+          Password: password.value, //parametry
         },
         {
           headers: {
             Accept: "*/*",
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "multipart/form-data", //Nagłówki
           },
         }
       );
-      router.push('/list');
+      router.push('/list'); //Przeniesienie na strone z listą.
     } catch (error) {
-      console.error(error);
+      console.error(error); //Wyłapanie błędów do konsoli.
     }
   };
 </script>

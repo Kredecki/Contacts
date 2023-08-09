@@ -5,3 +5,5 @@ export enum RouterNameEnum {
     SignIn = 'SignIn',
     Add = 'Add'
 }
+
+//enumy pomocne, jeżeli chcemy rozbudować aplikacje dla np. wielu lokalizacji.
