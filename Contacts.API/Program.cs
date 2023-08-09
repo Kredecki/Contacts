@@ -15,8 +15,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//£¹czenie aplikacji z baz¹ danych (dodawanie dbcontextu do serwisu).
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+//Dodajemy .net identity. Defaultowo zasady tworzenia has³a s¹ standardowe (du¿a, ma³a litera, znak specjalny, cyfry) ale mo¿na to tutaj edytowaæ.
 builder.Services.AddIdentity<User, IdentityRole<Guid>>()
     .AddEntityFrameworkStores<DataContext>()
     .AddUserManager<UserManager<User>>()
@@ -25,12 +27,14 @@ builder.Services.AddIdentity<User, IdentityRole<Guid>>()
 
 builder.Services.AddAuthentication();
 
+//Dependency injection do serwisu
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<IContactRepository, ContactRepository>();
 builder.Services.AddScoped<ICategoriesService, CategoriesService>();
 builder.Services.AddScoped<ICategoriesRepositroy, CategoriesRepository>();
 
+//Ustawiamy Cross-Origin Resource Sharing, aby kontrolowaæ, które domeny mog¹ wykorzysytwaæ nasze api (W domyœle tylko nasz frontend).
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",

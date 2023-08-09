@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Contacts.API.Migrations
 {
+    //Autogenerowane z entity frameworka po dyrektywie Add-Migration InitialCreate
     [DbContext(typeof(DataContext))]
     partial class DataContextModelSnapshot : ModelSnapshot
     {

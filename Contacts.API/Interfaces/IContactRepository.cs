@@ -2,6 +2,7 @@
 
 namespace Contacts.API.Interfaces
 {
+    //Interface łączący repo z serwisem.
     public interface IContactRepository
     {
         Task<List<Contact>> GetContacts();

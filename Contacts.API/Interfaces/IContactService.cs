@@ -2,6 +2,7 @@
 
 namespace Contacts.API.Interfaces
 {
+    //Interface łączący serwis z kontrolerem.
     public interface IContactService
     {
         Task<List<Contact>> GetContacts();

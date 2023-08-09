@@ -2,6 +2,7 @@
 
 namespace Contacts.API.BindingModels
 {
+    //Model, który służy jedynie do komunikacji FE <=> BE - dokładnie logowania użytkownika.
     public class SignIn
     {
         [EmailAddress]
