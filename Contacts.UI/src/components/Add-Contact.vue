@@ -17,8 +17,10 @@
         <label for="password">Password:</label>
         <input v-model="Password" type="password" id="password" required>
 
-        <label for="categoryId">Category ID:</label>
-        <input v-model="CategoryId" type="number" id="categoryId" required>
+        <label for="category">Category:</label>
+        <select v-model="selectedCategoryId" id="category" required>
+          <option v-for="category in categories" :key="category.categoryId" :value="category.categoryId">{{ category.categoryName }}</option>
+        </select>
 
         <label for="subcategoryId">Subcategory ID:</label>
         <input v-model="SubcategoryId" type="number" id="subcategoryId" required>
@@ -33,7 +35,7 @@
 
 
 <script lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
 export default {
@@ -43,13 +45,16 @@ export default {
     const Phone = ref();
     const Email = ref();
     const Password = ref();
+    const selectedCategoryId = ref();
     const CategoryId = ref();
     const SubcategoryId = ref();
     const BirthDate = ref('');
+    const categories = ref([]);
+    const subcategories = ref([]);
 
     const addContact = async () => {
       try {
-        const response = await axios.post(
+        await axios.post(
         "api/AddContact",
         {
           Name: Name.value,
@@ -57,7 +62,7 @@ export default {
           Phone: Phone.value,
           Email: Email.value,
           Password: Password.value,
-          CategoryId: CategoryId.value,
+          CategoryId: selectedCategoryId.value,
           SubcategoryId: SubcategoryId.value,
           BirthDate: BirthDate.value
         },
@@ -73,6 +78,24 @@ export default {
       }
     };
 
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get('/api/GetCategories', {
+          headers: {
+            accept: 'application/json',
+          },
+        });
+        categories.value = response.data;
+        console.log(response.data)
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
+    onMounted(() => {
+      fetchCategories();
+    });
+
     return {
       Name,
       Surname,
@@ -82,7 +105,9 @@ export default {
       CategoryId,
       SubcategoryId,
       BirthDate,
-      addContact
+      addContact,
+      categories,
+      selectedCategoryId
     };
   }
 };
