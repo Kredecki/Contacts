@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <button class="Add" v-if="isAuthorized">+</button>
+    <button class="Add" v-if="isAuthorized" @click="GotoAdd">+</button>
     <div v-for="contact in contacts" :key="contact.contactId" class="contact">
       <div class="contact-details" @click="togglePhoneNumber(contact)">
         {{ contact.name }} {{ contact.surname }}
@@ -22,6 +22,7 @@
 <script lang="ts">
 import { onMounted, ref, defineComponent, onBeforeMount } from 'vue';
 import axios from 'axios';
+import { useRouter } from 'vue-router';
 
 interface Contact {
   contactId: number;
@@ -34,6 +35,8 @@ interface Contact {
 export default defineComponent({
   components: {},
   setup() {
+    const router = useRouter();
+
     const contacts = ref<Contact[]>([]);
     let isAuthorized = ref();
 
@@ -96,9 +99,18 @@ export default defineComponent({
         } else {
           console.error('Failed to remove contact.');
         }
+        GetContacts();
       } catch (error) {
         console.error('Error removing contact:', error);
       }
+    }
+
+    function GotoAdd(){
+      router.push('/add');
+    }
+
+    function GoToDetails(){
+      router.push('/Details');
     }
 
     onBeforeMount(async () => {
@@ -113,7 +125,9 @@ export default defineComponent({
       contacts,
       togglePhoneNumber,
       isAuthorized,
-      removeContact
+      removeContact,
+      GotoAdd,
+      GoToDetails
     };
   },
 });
