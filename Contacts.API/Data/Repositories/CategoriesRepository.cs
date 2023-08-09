@@ -1,5 +1,6 @@
 ﻿using Contacts.API.Interfaces;
 using Contacts.API.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Contacts.API.Data.Repositories
@@ -22,5 +23,12 @@ namespace Contacts.API.Data.Repositories
         {
             return await _db.Subcategories.Where(subcategory => subcategory.SubcategoryId == 1 || subcategory.SubcategoryId == 2).ToListAsync();
         }
+
+        public async Task subcategoryName(Subcategory subcategory)
+        {
+            _db.Subcategories.Add(subcategory);
+            await _db.SaveChangesAsync();
+        }
+
     }
 }

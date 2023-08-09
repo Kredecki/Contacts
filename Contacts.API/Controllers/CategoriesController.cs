@@ -26,5 +26,13 @@ namespace Contacts.API.Controllers
         {
             return await _categoriesService.GetBusinessSubCategories();
         }
+
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<IActionResult> AddNewSubcategory(string subcategoryName)
+        {
+            await _categoriesService.AddNewSubcategory(subcategoryName);
+            return Ok();
+        }
     }
 }
