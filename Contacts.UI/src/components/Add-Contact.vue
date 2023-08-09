@@ -22,8 +22,12 @@
           <option v-for="category in categories" :key="category.categoryId" :value="category.categoryId">{{ category.categoryName }}</option>
         </select>
 
-        <label for="subcategoryId">Subcategory ID:</label>
-        <input v-model="SubcategoryId" type="number" id="subcategoryId" required>
+        <label v-if="selectedCategoryId === 1 || selectedCategoryId === 3" for="subcategory">Subcategory:</label>
+        <select v-if="selectedCategoryId === 1" v-model="selectedSubcategoryId" id="subcategoryOption" required>
+          <option v-for="subcategory in subcategories" :key="subcategory.subcategoryId" :value="subcategory.subcategoryId">{{ subcategory.subcategoryName }}</option>
+        </select>
+
+        <input v-if="selectedCategoryId === 3" v-model="selectedSubcategoryId" id="subcategoryInput" required>
 
         <label for="birthDate">Birth Date:</label>
         <input v-model="BirthDate" type="date" id="birthDate" required>
@@ -47,12 +51,48 @@ export default {
     const Password = ref();
     const selectedCategoryId = ref();
     const CategoryId = ref();
+    const selectedSubcategoryId = ref();
     const SubcategoryId = ref();
     const BirthDate = ref('');
     const categories = ref([]);
     const subcategories = ref([]);
+    let cat = 0
 
     const addContact = async () => {
+
+      if(selectedCategoryId.value === 3){
+          await axios.post(
+          "api/AddNewSubcategory",
+          {
+            subcategoryName: selectedSubcategoryId.value,
+          },
+          {
+            headers: {
+              Accept: "*/*",
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        const response = await axios
+        .get(`/api/GetSubcategoryIdBySubcategoryName?subcategoryName=${selectedSubcategoryId.value}`, {
+          headers: {
+            accept: 'application/json',
+          },
+        })
+        .then(response => {
+          cat = response.data;
+          console.log(cat);
+          console.log(response.data)
+        })
+        .catch(error => {
+          console.error('Error fetching contacts:', error);
+        });
+      }
+      else{
+        cat = selectedSubcategoryId.value;
+      }
+
       try {
         await axios.post(
         "api/AddContact",
@@ -63,7 +103,7 @@ export default {
           Email: Email.value,
           Password: Password.value,
           CategoryId: selectedCategoryId.value,
-          SubcategoryId: SubcategoryId.value,
+          SubcategoryId: cat,
           BirthDate: BirthDate.value
         },
         {
@@ -86,14 +126,27 @@ export default {
           },
         });
         categories.value = response.data;
-        console.log(response.data)
       } catch (error) {
         console.error('Error fetching categories:', error);
       }
     };
 
+    const fetchSubcategories = async () => {
+      try {
+        const response = await axios.get('/api/GetBusinessSubcategories', {
+          headers: {
+            accept: 'application/json',
+          },
+        });
+        subcategories.value = response.data;
+      } catch (error) {
+        console.error('Error fetching subcategories:', error);
+      }
+    };
+
     onMounted(() => {
       fetchCategories();
+      fetchSubcategories();
     });
 
     return {
@@ -107,7 +160,9 @@ export default {
       BirthDate,
       addContact,
       categories,
-      selectedCategoryId
+      selectedCategoryId,
+      selectedSubcategoryId,
+      subcategories
     };
   }
 };
