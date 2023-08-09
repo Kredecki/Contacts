@@ -5,5 +5,6 @@ namespace Contacts.API.Interfaces
     public interface ICategoriesService
     {
         Task<List<Category>> GetCategories();
+        Task<List<Subcategory>> GetBusinessSubCategories();
     }
 }

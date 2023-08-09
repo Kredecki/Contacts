@@ -15,5 +15,10 @@ namespace Contacts.API.Services
         {
             return await _categoriesRepositroy.GetCategories();
         }
+
+        public async Task<List<Subcategory>> GetBusinessSubCategories()
+        {
+            return await _categoriesRepositroy.GetBusinessSubCategories();
+        }
     }
 }

@@ -17,5 +17,10 @@ namespace Contacts.API.Data.Repositories
         {
             return await _db.Categories.ToListAsync();
         }
+
+        public async Task<List<Subcategory>> GetBusinessSubCategories()
+        {
+            return await _db.Subcategories.Where(subcategory => subcategory.SubcategoryId == 1 || subcategory.SubcategoryId == 2).ToListAsync();
+        }
     }
 }
