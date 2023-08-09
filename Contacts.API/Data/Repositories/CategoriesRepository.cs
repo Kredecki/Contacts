@@ -35,5 +35,11 @@ namespace Contacts.API.Data.Repositories
             var subcategory = await _db.Subcategories.FirstOrDefaultAsync(x => x.SubcategoryName == subcategoryName);
             return subcategory.SubcategoryId;
         }
+
+        public async Task<string> GetSubcategoryNameById(int id)
+        {
+            var subcategory = await _db.Subcategories.FirstOrDefaultAsync(x => x.SubcategoryId == id);
+            return subcategory.SubcategoryName;
+        }
     }
 }
